@@ -1,10 +1,13 @@
 import { Route, Routes } from "react-router-dom"
+import Main from "../pages/Main"
 
 function AppRouter() {
   return (
+   <>
     <Routes>
-      <Route/>
+      <Route to="/main" element={<Main/>}/>
     </Routes>
+   </>
   )
 }
 
