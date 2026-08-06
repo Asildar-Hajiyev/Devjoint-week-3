@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { FaSearch, FaShoppingCart, FaTimes } from "react-icons/fa";
+import { FaSearch, FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../redux/dataSlice";
 import SearchBar from "./SearchBar";
-
+import { Link } from "react-router-dom";
 
 function Header() {
   const [query, setQuery] = useState("");
@@ -18,11 +18,17 @@ function Header() {
   }, [dispatch]);
 
   useEffect(() => {
+    let isActive = true;
     const timer = setTimeout(() => {
-      setDebouncedQuery(query);
-    }, 1500);
+      if (isActive) {
+        setDebouncedQuery(query);
+      }
+    }, 400);
 
-    return () => clearTimeout(timer);
+    return () => {
+      isActive = false;
+      clearTimeout(timer);
+    };
   }, [query]);
 
   const filtered = data.filter((item) =>
@@ -39,15 +45,15 @@ function Header() {
       <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
         {/* Left */}
         <div className="flex items-center gap-10">
-          <h1 className="text-3xl font-black tracking-wide">
+          <Link to="/main" className="text-3xl font-black tracking-wide">
             Dev<span className="text-indigo-600">Joint</span>
-          </h1>
+          </Link>
 
           <nav>
-            <a href="#" className="relative text-gray-700 font-semibold group">
+            <Link to="/main"  className="relative text-gray-700 font-semibold group">
               Home
               <span className="absolute left-0 -bottom-2 w-0 h-[3px] bg-indigo-600 duration-300 group-hover:w-full"></span>
-            </a>
+            </Link>
           </nav>
         </div>
 
@@ -96,14 +102,6 @@ function Header() {
             <FaSearch />
           </button>
 
-          {/* Cart */}
-          <button className="relative w-12 h-12 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-lg hover:bg-indigo-700 hover:scale-105 duration-300">
-            <FaShoppingCart className="text-lg" />
-
-            <span className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-red-500 text-white text-xs font-bold flex items-center justify-center">
-              0
-            </span>
-          </button>
         </div>
       </div>
 
