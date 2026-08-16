@@ -1,39 +1,16 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { FaSearch, FaTimes } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../redux/dataSlice";
-import SearchBar from "./SearchBar";
 import { Link } from "react-router-dom";
+import { useDebounce } from "../hooks/useDebounce";
+import useFetch from "../hooks/useFerch";
+import SearchResultItem from "./SearchResultItem";
 
 function Header() {
-  const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState("");
+ const [query, setQuery] = useState("");
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
-  const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.data);
-
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
-
-  useEffect(() => {
-    let isActive = true;
-    const timer = setTimeout(() => {
-      if (isActive) {
-        setDebouncedQuery(query);
-      }
-    }, 400);
-
-    return () => {
-      isActive = false;
-      clearTimeout(timer);
-    };
-  }, [query]);
-
-  const filtered = data.filter((item) =>
-    item.title?.toLowerCase().includes(debouncedQuery.toLowerCase()),
-  );
+  const debouncedQuery = useDebounce(query, 400);
+  const { products: filtered } = useFetch(debouncedQuery, 1, 6);
 
   const closeSearch = () => {
     setQuery("");
@@ -81,7 +58,7 @@ function Header() {
             <div className="absolute top-14 left-0 w-full max-h-60 overflow-y-auto bg-white shadow-lg rounded-lg border border-gray-100 z-50">
               {filtered.length > 0 ? (
                 filtered.map((item) => (
-                  <SearchBar item={item} key={item.id} onSelect={closeSearch} />
+                  <SearchResultItem item={item} key={item.id} onSelect={closeSearch} />
                 ))
               ) : (
                 <p className="p-4 text-center text-sm text-gray-500">
@@ -138,7 +115,7 @@ function Header() {
             <div className="max-h-60 overflow-y-auto px-2 pb-3">
               {filtered.length > 0 ? (
                 filtered.map((item) => (
-                  <SearchBar item={item} key={item.id} onSelect={closeSearch} />
+                  <SearchResultItem item={item} key={item.id} onSelect={closeSearch} />
                 ))
               ) : (
                 <p className="p-4 text-center text-sm text-gray-500">

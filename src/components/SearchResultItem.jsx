@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
-function SearchBar({item, onSelect}) {
+function SearchResultItem({ item, onSelect }) {
   return (
     <li className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-gray-50 border border-transparent hover:border-gray-100 transition-all duration-150 cursor-pointer">
       <Link
@@ -11,7 +11,7 @@ function SearchBar({item, onSelect}) {
         <div className="w-14 h-14 shrink-0 rounded-md bg-gray-50 overflow-hidden flex items-center justify-center">
           <img
             className="w-full h-full object-contain p-1"
-            src={item.image}
+            src={item.thumbnail}
             alt={item.title}
           />
         </div>
@@ -22,13 +22,13 @@ function SearchBar({item, onSelect}) {
           </p>
           {item.price && (
             <span className="text-sm font-semibold text-gray-900">
-              {item.price} ₼
+              ${item.price}
             </span>
           )}
         </div>
       </Link>
     </li>
-  )
+  );
 }
 
-export default SearchBar
+export default SearchResultItem;
