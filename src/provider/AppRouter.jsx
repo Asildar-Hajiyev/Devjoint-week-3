@@ -5,7 +5,7 @@ function AppRouter() {
   return (
    <>
     <Routes>
-      <Route to="/main" element={<Main/>}/>
+      <Route path="/main" element={<Main/>}/>
     </Routes>
    </>
   )

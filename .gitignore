@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Environment variables (API key burada saxlanılır — GitHub-a push ETMƏ)
+.env
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
