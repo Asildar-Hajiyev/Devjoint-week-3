@@ -1,4 +1,6 @@
-function Card({ item }) {
+import { Link } from "react-router-dom";
+
+function Card({ item, onSelect }) {
   const poster = item.Poster && item.Poster !== "N/A" ? item.Poster : "";
 
   return (
@@ -7,13 +9,14 @@ function Card({ item }) {
         {item.Year}
       </span>
 
-      <div className="w-full h-40 sm:h-48 md:h-56 bg-gray-50 flex items-center justify-center">
+      <Link  to={`/product/${item.imdbID}`}
+        onClick={onSelect} className="w-full h-40 sm:h-48 md:h-56 bg-gray-50 flex items-center justify-center">
         <img
           src={poster}
           alt={item.Title}
           className="w-full h-full object-cover"
         />
-      </div>
+      </Link>
 
       <div className="p-3 sm:p-4 flex flex-col flex-1">
         <span className="text-xs sm:text-sm text-gray-500 capitalize">
