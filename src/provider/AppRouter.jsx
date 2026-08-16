@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import Main from "../pages/Main"
+import ProductDetail from "../pages/ProductDetails"
 
 function AppRouter() {
   return (
