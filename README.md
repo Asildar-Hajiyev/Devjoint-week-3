@@ -1,32 +1,52 @@
-# DevJoint
+# DevJoint 🎬
 
-DevJoint — React və Redux Toolkit əsasında hazırlanmış, responsiv məhsul kataloqu tətbiqidir. Layihə [Fake Store API](https://fakestoreapi.com) vasitəsilə real vaxt data çəkərək istifadəçilərə axtarış, filtrasiya və səhifələmə funksionallığı təqdim edir.
+OMDb API əsasında qurulmuş, film/serial axtarışı və detallarını göstərən React tətbiqi.
 
 ## Xüsusiyyətlər
 
-- 🔍 **Axtarış** — debounce mexanizmi ilə optimallaşdırılmış, real-time məhsul axtarışı (desktop + mobil dəstəyi)
-- 📦 **Səhifələmə (Pagination)** — məhsulların səhifələr üzrə bölünməsi
-- ⚡ **State idarəetməsi** — Redux Toolkit (`createAsyncThunk`) ilə mərkəzləşdirilmiş data axını
-- 🎯 **UX vəziyyətləri** — loading, error və empty state-lərin ayrıca göstərilməsi
-- 📱 **Responsiv dizayn** — mobil, tablet və desktop üçün uyğunlaşdırılmış interfeys
-- 🧩 **Təkrar istifadə oluna bilən komponentlər** — Card, Search, Pagination, Footer
+- 🔍 **Canlı axtarış** — debounce (400ms) ilə optimallaşdırılmış axtarış paneli, həm desktop, həm də mobil üçün ayrı UI
+- 📄 **Səhifələmə (Pagination)** — nəticələr 8-ər ədəd göstərilir, "sliding window" pagination komponenti
+- 🎞️ **Detal səhifəsi** — seçilmiş film/serial haqqında poster, janr, rejissor, IMDb reytinqi və süjet
+- 🔔 **Toast bildirişləri** — `react-toastify` inteqrasiyası
+- 📱 **Responsiv dizayn** — Tailwind CSS ilə mobil uyğun header və grid
 
 ## Texnologiyalar
 
-- React
-- Redux Toolkit
-- Axios
-- Tailwind CSS
-- React Router
-- React Icons
-- react-router-dom
+- **React** (hooks: `useState`, `useEffect`)
+- **React Router DOM** — səhifələr arası naviqasiya (`/main`, `/product/:id`)
+- **Tailwind CSS** — stilizasiya
+- **React Icons** (`react-icons/fa`)
+- **React Toastify** — bildirişlər
+- **OMDb API** — məlumat mənbəyi
 
-## Struktur
+## Layihə strukturu
 
 ```
 src/
-├── components/     → Card, Pagination, Footer və s.
-├── pages/          → Header, Search
-├── redux/          → dataSlice (thunk + reducer)
-├── hooks/          → useFetch (custom hook)
+├── components/
+│   ├── Header.jsx           # Naviqasiya + axtarış paneli (desktop/mobil)
+│   ├── Footer.jsx           # Footer
+│   ├── Card.jsx             # Film kartı
+│   ├── Pagination.jsx       # Səhifələmə komponenti
+│   └── SearchResultItem.jsx # Axtarış nəticəsi sətri
+├── hooks/
+│   ├── useFerch.js          # OMDb API-dən məlumat çəkmə hook-u (axtarış + səhifələmə)
+│   └── useDebounce.js       # Debounce hook-u
+├── pages/
+│   ├── Main.jsx             # Əsas səhifə (grid + pagination)
+│   └── ProductDetails.jsx   # Film detal səhifəsi
+├── provider/
+│   └── AppRouter.jsx        # Route konfiqurasiyası
+└── App.jsx                  # Root komponent
 ```
+
+## Mühit dəyişənləri
+
+> OMDb API açarını pulsuz olaraq [omdbapi.com](https://www.omdbapi.com/apikey.aspx) saytından ala bilərsiniz.
+
+## Skriptlər
+
+| Əmr | Təsvir |
+|---|---|
+| `npm run dev` | Development server-i işə salır |
+

@@ -5,7 +5,7 @@ const API_KEY = "445605a";
 const BASE_URL = "https://www.omdbapi.com";
 
 function ProductDetail() {
-  const { id } = useParams(); // burada imdbID gələcək (məs. "tt3896198")
+  const { id } = useParams(); 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

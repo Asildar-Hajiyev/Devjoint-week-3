@@ -1,7 +1,7 @@
 function Pagination({ currentPage, totalPages, onPageChange }) {
   if (totalPages <= 1) return null;
 
-  // Cari səhifənin ətrafında maksimum 5 düymə göstər
+ 
   const WINDOW = 5;
   let start = Math.max(1, currentPage - Math.floor(WINDOW / 2));
   let end = Math.min(totalPages, start + WINDOW - 1);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const API_KEY = "445605a"; // öz OMDb key-in
+const API_KEY = "445605a"; 
 const BASE_URL = "https://www.omdbapi.com";
 
 function useFetch(query, page, itemsPerPage = 8) {
@@ -10,7 +10,7 @@ function useFetch(query, page, itemsPerPage = 8) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // OMDb axtarış sözü olmadan işləmir
+  
     if (!query.trim()) {
       setProducts([]);
       setTotal(0);
