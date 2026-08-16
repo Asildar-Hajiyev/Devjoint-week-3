@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
-const BASE_URL = "https://dummyjson.com";
+const API_KEY = "445605a"; // öz OMDb key-in
+const BASE_URL = "https://www.omdbapi.com";
 
 function useFetch(query, page, itemsPerPage = 8) {
   const [products, setProducts] = useState([]);
@@ -9,11 +10,16 @@ function useFetch(query, page, itemsPerPage = 8) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // OMDb axtarış sözü olmadan işləmir
+    if (!query.trim()) {
+      setProducts([]);
+      setTotal(0);
+      setError(null);
+      return;
+    }
+
     const controller = new AbortController();
-    const skip = (page - 1) * itemsPerPage;
-    const url = query.trim()
-      ? `${BASE_URL}/products/search?q=${query}&limit=${itemsPerPage}&skip=${skip}`
-      : `${BASE_URL}/products?limit=${itemsPerPage}&skip=${skip}`;
+    const url = `${BASE_URL}/?apikey=${API_KEY}&s=${encodeURIComponent(query)}&page=${page}`;
 
     setLoading(true);
     setError(null);
@@ -21,8 +27,14 @@ function useFetch(query, page, itemsPerPage = 8) {
     fetch(url, { signal: controller.signal })
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data.products || []);
-        setTotal(data.total || 0);
+        if (data.Response === "False") {
+          setProducts([]);
+          setTotal(0);
+          setError(data.Error || "Nəticə tapılmadı");
+        } else {
+          setProducts(data.Search);
+          setTotal(Number(data.totalResults) || 0);
+        }
       })
       .catch((err) => {
         if (err.name !== "AbortError") setError("Xəta baş verdi.");

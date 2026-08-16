@@ -1,9 +1,10 @@
 import {  useState } from "react";
 import { FaSearch, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useDebounce } from "../hooks/useDebounce";
-import useFetch from "../hooks/useFerch";
+
 import SearchResultItem from "./SearchResultItem";
+import useFetch from "../hooks/useFerch";
+import { useDebounce } from "../hooks/useDebounce";
 
 function Header() {
  const [query, setQuery] = useState("");
@@ -58,7 +59,7 @@ function Header() {
             <div className="absolute top-14 left-0 w-full max-h-60 overflow-y-auto bg-white shadow-lg rounded-lg border border-gray-100 z-50">
               {filtered.length > 0 ? (
                 filtered.map((item) => (
-                  <SearchResultItem item={item} key={item.id} onSelect={closeSearch} />
+                  <SearchResultItem item={item} key={item.imdbID} onSelect={closeSearch} />
                 ))
               ) : (
                 <p className="p-4 text-center text-sm text-gray-500">

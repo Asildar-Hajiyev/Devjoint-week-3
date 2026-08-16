@@ -7,9 +7,9 @@ import useFetch from "../hooks/useFerch";
 const ITEMS_PER_PAGE = 8;
 
 function Main() {
-const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const { products: data, total, loading, error } = useFetch(
-    "",
+    "movie",
     currentPage,
     ITEMS_PER_PAGE
   );
@@ -51,22 +51,18 @@ const [currentPage, setCurrentPage] = useState(1);
       </div>
     );
   }
+const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
 
-  const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentItems = data.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-
-  const handlePageChange = (page) => {
-    if (page < 1 || page > totalPages) return;
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
+const handlePageChange = (page) => {
+  if (page < 1 || page > totalPages) return;
+  setCurrentPage(page);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
   return (
-    <div>
+<div>
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-        {currentItems.map((item) => (
-          <Card key={item.id} item={item} />
+        {data.map((item) => (
+          <Card key={item.imdbID} item={item} />
         ))}
       </div>
 

@@ -1,6 +1,15 @@
 function Pagination({ currentPage, totalPages, onPageChange }) {
   if (totalPages <= 1) return null;
 
+  // Cari səhifənin ətrafında maksimum 5 düymə göstər
+  const WINDOW = 5;
+  let start = Math.max(1, currentPage - Math.floor(WINDOW / 2));
+  let end = Math.min(totalPages, start + WINDOW - 1);
+  start = Math.max(1, end - WINDOW + 1);
+
+  const pages = [];
+  for (let p = start; p <= end; p++) pages.push(p);
+
   return (
     <div className="flex items-center justify-center gap-2 py-8 flex-wrap">
       <button
@@ -11,7 +20,14 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         Əvvəlki
       </button>
 
-      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+      {start > 1 && (
+        <>
+          <button onClick={() => onPageChange(1)} className="w-10 h-10 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200">1</button>
+          {start > 2 && <span className="px-1 text-gray-400">...</span>}
+        </>
+      )}
+
+      {pages.map((page) => (
         <button
           key={page}
           onClick={() => onPageChange(page)}
@@ -24,6 +40,15 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           {page}
         </button>
       ))}
+
+      {end < totalPages && (
+        <>
+          {end < totalPages - 1 && <span className="px-1 text-gray-400">...</span>}
+          <button onClick={() => onPageChange(totalPages)} className="w-10 h-10 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200">
+            {totalPages}
+          </button>
+        </>
+      )}
 
       <button
         onClick={() => onPageChange(currentPage + 1)}
