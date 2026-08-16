@@ -3,7 +3,7 @@ function Card({ item }) {
     <div className="w-full rounded-xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-lg transition duration-300 flex flex-col bg-white">
       <div className="w-full h-40 sm:h-48 md:h-56 bg-gray-50 flex items-center justify-center">
         <img
-          src={item.image}
+          src={item.thumbnail}
           alt={item.title}
           className="w-full h-full object-contain p-4"
         />
