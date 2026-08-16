@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {  useState } from "react";
+
 import Card from "../components/Card";
 import Pagination from "../components/Pagination";
-import { getAllUsers } from "../redux/dataSlice";
+import useFetch from "../hooks/useFerch";
 
 const ITEMS_PER_PAGE = 8;
 
 function Main() {
-  const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((state) => state.data);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
+const [currentPage, setCurrentPage] = useState(1);
+  const { products: data, total, loading, error } = useFetch(
+    "",
+    currentPage,
+    ITEMS_PER_PAGE
+  );
 
   if (loading) {
     return (
